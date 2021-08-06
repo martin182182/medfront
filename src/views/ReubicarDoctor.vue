@@ -79,7 +79,7 @@ export default {
       this.updateMed.funcion = document.getElementById("funcion").value;
       this.updateMed.experiencia = document.getElementById("xp").value;
       console.log(this.updateMed);
-      axios.put("http://20.84.120.37:3000/api/updateMed/"+this.id,this.updateMed)
+      axios.put("http://20.84.120.37:3000/api/updateMed/"+this.id,JSON.parse(JSON.stringify(this.updateMed)))
       .then(res=>{
         if(res.status==200){
           this.updateMed = res.data["medico"];
