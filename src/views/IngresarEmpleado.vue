@@ -68,14 +68,14 @@ export default {
   },
   methods:{
     list(){
-      axios.get("http://localhost:3900/api/listCenter")
+      axios.get("http://20.84.120.37:3000/api/listCenter")
       .then(res=>{
         this.listCenter=res.data["centro"];
       })
       .catch(e=>console.log(e));
     },
     save(){
-      axios.post("http://localhost:3900/api/createEmployee",this.employee)
+      axios.post("http://20.84.120.37:3000/api/createEmployee",this.employee)
       .then(res=>{
         if(res.status==200){
           alert(this.employee.nombre+' se guardo con exito');

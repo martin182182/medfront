@@ -56,14 +56,14 @@ export default {
   },
   methods:{
     listMed(){
-      axios.get("http://localhost:3900/api/listMed")
+      axios.get("http://20.84.120.37:3000/api/listMed")
       .then(res => {
         this.listDr = res.data["medico"];
       })
       .catch(e=>console.log(e));
     },
     edit(){
-      axios.get("http://localhost:3900/api/editMed/"+this.id)
+      axios.get("http://20.84.120.37:3000/api/editMed/"+this.id)
       .then(res=>{
         if(res.status==200){
           this.editMed = res.data["medico"];
@@ -78,7 +78,8 @@ export default {
       this.updateMed.id_empleado = parseInt(document.getElementById("idE").value);
       this.updateMed.funcion = document.getElementById("funcion").value;
       this.updateMed.experiencia = document.getElementById("xp").value;
-      axios.put("http://localhost:3900/api/updateMed/"+this.id,this.updateMed)
+      console.log(this.updateMed);
+      axios.put("http://20.84.120.37:3000/api/updateMed/"+this.id,this.updateMed)
       .then(res=>{
         if(res.status==200){
           this.updateMed = res.data["medico"];

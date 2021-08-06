@@ -55,7 +55,7 @@ export default {
   },
   methods:{
     list(){
-      axios.get("http://localhost:3900/api/listEmployee")
+      axios.get("http://20.84.120.37:3000/api/listEmployee")
       .then(res=>{
         if(res.status==200){
           this.listEmployee = res.data["empleado"];
@@ -64,7 +64,7 @@ export default {
       .catch(e=>console.log(e));
     },
     save(){
-      axios.post("http://localhost:3900/api/createMed",this.med)
+      axios.post("http://20.84.120.37:3000/api/createMed",this.med)
       .then(res=>{
         if(res.status==200){
           alert('Empleado '+this.med.id_empleado+' es doctor/a');
