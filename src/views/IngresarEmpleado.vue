@@ -10,6 +10,7 @@
       id="inline-form-input-name"
       class="mb-2 mr-sm-2 mb-sm-0"
       placeholder="Nombre"
+      v-model="employee.nombre" 
     ></b-form-input>
     <br>
     <label for="inline-form-input-dir">Dirección</label>
@@ -17,6 +18,7 @@
       id="inline-form-input-dir"
       class="mb-2 mr-sm-2 mb-sm-0"
       placeholder="Dirección"
+      v-model="employee.direccion" 
     ></b-form-input>
     <br>
     <label for="inline-form-input-salary">Salario</label>
@@ -24,13 +26,15 @@
       id="inline-form-input-salary"
       class="mb-1 mr-sm-1 mb-sm-0"
       placeholder="Salario"
+      v-model="employee.salario" 
     ></b-form-input>
     <br>
     <label for="example-datepicker">Fecha de entrada</label>
-    <b-form-datepicker id="example-datepicker" class="mb-2"></b-form-datepicker>
+    <b-form-datepicker id="example-datepicker" v-model="employee.fecha_entrada" class="mb-2"></b-form-datepicker>
     <br>
-    <select id="center">
-      <option v-for="(center,index) in listCenter" :key=index :value="center.id">{{center.nombre}}</option>
+    <select id="center" v-model="employee.id_centro">
+      <option value="">Escoge un centro</option>
+      <option v-for="(center,index) in listCenter" :key=index  :value="center.id">{{center.nombre}}</option>
     </select>
     <br>
 
@@ -48,7 +52,15 @@ export default {
   name: 'IngresarEmpleado',
   data(){
     return {
-      listCenter: ''
+      listCenter: '',
+      employee: {
+        nombre: '',
+        salario: '',
+        direccion: '',
+        fecha_entrada: '',
+        id_centro: ''
+
+      }
     }
   },
   mounted(){
@@ -56,15 +68,21 @@ export default {
   },
   methods:{
     list(){
-      axios.get("http://localhost:3000/api/listCenter")
+      axios.get("http://localhost:3900/api/listCenter")
       .then(res=>{
         this.listCenter=res.data["centro"];
       })
       .catch(e=>console.log(e));
     },
     save(){
-      var selectCenter = document.getElementById("center").value;
-      console.log(selectCenter);
+      axios.post("http://localhost:3900/api/createEmployee",this.employee)
+      .then(res=>{
+        if(res.status==200){
+          alert(this.employee.nombre+' se guardo con exito');
+          this.employee = res.data;
+        }
+      })
+      .catch(e=>alert('Error al guardar'))
     }
   }
 }

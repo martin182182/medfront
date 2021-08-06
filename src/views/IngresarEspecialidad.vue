@@ -46,7 +46,7 @@ export default {
     save(){
       this.specialty.nombre = document.getElementById("inline-form-input-name").value;
       this.specialty.descripcion = document.getElementById("inline-form-input-descripcion").value;
-      axios.post("http://localhost:3000/api/createSpecialty",this.specialty).then(res=>{
+      axios.post("http://localhost:3900/api/createSpecialty",this.specialty).then(res=>{
         if(res.status == 200){
           this.specialty = res.data;
         }

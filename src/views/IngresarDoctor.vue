@@ -5,36 +5,30 @@
       <b-card-text>
         <div>
   <b-form >
-    <label for="inline-form-input-name">Id</label>
-    <b-form-input
-      id="inline-form-input-name"
-      class="mb-2 mr-sm-2 mb-sm-0"
-      placeholder="Id"
-    ></b-form-input>
+    <label for="inline-form-input-id">Id de Empleado</label>
+    <select id="employee" v-model="med.id_empleado">
+      <option value="">Escoge un empleado</option>
+      <option v-for="(employee,index) in listEmployee" :key=index  :value="employee.id">{{employee.nombre}}</option>
+    </select>
     <br>
-    <label for="inline-form-input-name">Id de Empleado</label>
+    <label for="inline-form-input-function">Función</label>
     <b-form-input
-      id="inline-form-input-name"
-      class="mb-2 mr-sm-2 mb-sm-0"
-      placeholder="Id de Empleado"
-    ></b-form-input>
-    <br>
-    <label for="inline-form-input-name">Función</label>
-    <b-form-input
-      id="inline-form-input-name"
+      id="inline-form-input-function"
       class="mb-1 mr-sm-1 mb-sm-0"
       placeholder="Función"
+      v-model="med.funcion"
     ></b-form-input>
     <br>
-    <label for="inline-form-input-name">Experiencia</label>
+    <label for="inline-form-input-xp">Experiencia</label>
     <b-form-input
-      id="inline-form-input-name"
+      id="inline-form-input-xp"
       class="mb-1 mr-sm-1 mb-sm-0"
       placeholder="Experiencia"
+      v-model="med.experiencia"
     ></b-form-input>
     <br>
 
-    <b-button variant="primary">Guardar</b-button>
+    <b-button variant="primary" v-on:click="save()">Guardar</b-button>
   </b-form>
 </div>
       </b-card-text>
@@ -43,7 +37,41 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-    name: 'IngresarDoctor'
+  name: 'IngresarDoctor',
+  data(){
+    return {
+      listEmployee: '',
+      med: {
+        id_empleado: 0,
+        funcion: '',
+        experiencia: ''
+      }
+    }
+  },
+  mounted(){
+    this.list();
+  },
+  methods:{
+    list(){
+      axios.get("http://localhost:3900/api/listEmployee")
+      .then(res=>{
+        if(res.status==200){
+          this.listEmployee = res.data["empleado"];
+        }
+      })
+      .catch(e=>console.log(e));
+    },
+    save(){
+      axios.post("http://localhost:3900/api/createMed",this.med)
+      .then(res=>{
+        if(res.status==200){
+          alert('Empleado '+this.med.id_empleado+' es doctor/a');
+          this.med = res.data;
+        }
+      });
+    }
+  }
 }
 </script>
