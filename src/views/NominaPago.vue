@@ -72,6 +72,7 @@ export default {
         this.report.text(20,(i*20)+60,"Paciente: "+this.med[i].paciente);
       }
       this.report.save("test.pdf");
+      this.report = new jsPDF();
     }
   }
 }
