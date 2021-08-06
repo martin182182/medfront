@@ -57,13 +57,19 @@ export default {
       axios.get("https://obscure-ridge-32684.herokuapp.com/api/v1/consulta/"+idSplit[0]+"/"+idSplit[1]+"/empleado")
       .then(res=>{
         this.med = res.data;
+        alert('Reporte Creado');
+        console.log(this.med);
       })
       .catch(e=>console.log(e));
     },
     reportPDF(){
       var space = 1;
+      this.report.text(20,20,"Centro: "+this.med[0].centro["nombre"]);
+      this.report.text(20,30,"Empleado: "+this.med[0].empleado["nombre"]);
+      this.report.text(20,40,"Fecha: "+this.med[0].fecha);
       for(let i = 0; i< this.med.length;i++){
-        this.report.text(20,(i*20)+20,this.med[i].id.toString()+"\n");
+        this.report.text(20,(i*20)+50,"Especialidad: "+this.med[i].especialidad["nombre"]);
+        this.report.text(20,(i*20)+60,"Paciente: "+this.med[i].paciente);
       }
       this.report.save("test.pdf");
     }
